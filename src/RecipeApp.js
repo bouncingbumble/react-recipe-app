@@ -11,6 +11,13 @@ class RecipeApp extends Component {
     this.state = {
       recipes:[
         {
+          id: 0,
+          title: 'Pasta',
+          img: 'spaghetti.jpg',
+          instructions: 'cook the spaghetti',
+          ingredients: ['paster', 'water', 'sauce']
+        },
+        {
           id: 1,
           title: 'Pasta',
           img: 'spaghetti.jpg',
@@ -23,18 +30,25 @@ class RecipeApp extends Component {
           img: 'spaghetti.jpg',
           instructions: 'cook the spaghetti',
           ingredients: ['paster', 'water', 'sauce']
-        },
-        {
-          id: 3,
-          title: 'Pasta',
-          img: 'spaghetti.jpg',
-          instructions: 'cook the spaghetti',
-          ingredients: ['paster', 'water', 'sauce']
         }
       ],
       nextRecipeId: 3
     }
+
+    this.handleSave = this.handleSave.bind(this);
   }
+
+  handleSave(recipe){
+    this.setState((prevState, props) => {
+      const newRecipe = {...recipe, id: this.state.nextRecipeId}
+      return {
+        nextRecipeId: prevState.nextRecipeId,
+        recipes: [...this.state.recipes, newRecipe]
+      }
+    })
+  }
+
+
   render() {
     return (
       <div className="App">
@@ -42,10 +56,8 @@ class RecipeApp extends Component {
           links= {['1 link', '2 link', '3 link']}
           appName={'RecipeApp'}
         />
-        <RecipeForm/>
-        <RecipeList 
-          recipes={this.state.recipes}
-        />
+        <RecipeForm onSave={this.handleSave} />
+        <RecipeList recipes={this.state.recipes} />
       </div>
     );
   }
