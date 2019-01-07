@@ -1,11 +1,20 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import './Navbar.css';
 
 class Navbar extends Component {
+    static defaultProps = {
+        onNewRecipe() {}
+    }
+
+    static propTypes = {
+        onNewRecipe: PropTypes.func
+    }
+
     render() {
         const {appName} = this.props;
         const links = this.props.links.map((link, i) => (
-            <a key={i} href="#">{link}</a>
+            <a onClick={this.props.onNewRecipe} key={i} href="#">{link}</a>
         ))
         return (
             <div className="navbar">
